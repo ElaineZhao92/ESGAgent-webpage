@@ -114,6 +114,14 @@ h1, h2, h3 {
   color: transparent;
 }
 
+.hero h1 .amp {
+  font-family: Georgia, "Times New Roman", serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 0.8em;
+  padding: 0 0.06em;
+}
+
 .tagline {
   color: var(--color-muted);
   font-size: 1.35rem;
