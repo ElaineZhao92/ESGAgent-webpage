@@ -156,31 +156,18 @@ h1, h2, h3 {
   margin: 0 10px;
 }
 
-.note {
-  color: var(--color-muted);
-  font-size: 0.85rem;
-  margin: 0 0 16px;
-}
-
-.emails {
-  font-size: 0.9rem;
-  margin: 0 0 16px;
-}
-
-.emails a {
-  color: var(--blue);
-  text-decoration: none;
-}
-
 .venue-line {
   font-size: 1rem;
   color: var(--color-muted);
   margin: 0 0 32px;
 }
 
-.venue-line strong {
-  color: var(--color-text);
+.venue-name {
   font-weight: 700;
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .links {
