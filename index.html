@@ -4,16 +4,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ESGAgent</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
 <header class="site-header">
   <div class="container header-inner">
-    <a href="#" class="logo">ESGAgent</a>
+    <a href="#" class="logo"><span class="logo-dot"></span>ESGAgent</a>
     <nav class="nav">
       <a href="#abstract">Abstract</a>
-      <a href="#method">Method</a>
+      <a href="#architecture">Architecture</a>
+      <a href="#benchmark">Benchmark</a>
+      <a href="#leaderboard">Leaderboard</a>
       <a href="#demo">Demo</a>
       <a href="#citation">Citation</a>
     </nav>
@@ -23,7 +28,10 @@
 <main>
   <section class="hero">
     <div class="container">
+      <div class="venue-badge">The 2026 Conference on Empirical Methods in Natural Language Processing &middot; EMNLP 2026</div>
+
       <h1>ESGAgent</h1>
+      <p class="tagline">An expert-level agent and comprehensive benchmark for sustainable finance</p>
 
       <div class="authors">
         <span class="author">Yilei Zhao<sup>1</sup></span>,
@@ -47,12 +55,29 @@
         <a href="mailto:bryan.limwy@ntu.edu.sg">bryan.limwy@ntu.edu.sg</a>
       </div>
 
-      <div class="venue-badge">The 2026 Conference on Empirical Methods in Natural Language Processing (EMNLP 2026)</div>
-
       <div class="links">
         <a class="btn" href="#">Paper</a>
-        <a class="btn btn-outline" href="#">Code</a>
+        <a class="btn btn-outline" href="https://github.com/ElaineZhao92/ESGAgent-and-Benchmark">Code</a>
         <a class="btn btn-outline" href="#demo">Demo</a>
+      </div>
+
+      <div class="stats">
+        <div class="stat">
+          <span class="stat-value">84.15%</span>
+          <span class="stat-label">Accuracy on Levels 1&ndash;2</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value">310</span>
+          <span class="stat-label">Sustainability reports (DJIA, 2010&ndash;2024)</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value">20+4</span>
+          <span class="stat-label">LLMs &amp; deep research agents evaluated</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value">3</span>
+          <span class="stat-label">Benchmark levels, atomic &rarr; report-level</span>
+        </div>
       </div>
     </div>
   </section>
@@ -60,27 +85,129 @@
   <section id="abstract" class="section">
     <div class="container">
       <h2>Abstract</h2>
-      <p>Placeholder for the paper abstract.</p>
+      <p>Environmental, social, and governance (ESG) criteria are essential for evaluating corporate sustainability, yet professional ESG analysis is hindered by data fragmentation and complex multi-step workflows. Existing ESG benchmarks rely on LLM-generated questions that often suffer from semantic ambiguity, limiting their diagnostic reliability. We introduce <strong>ESGAgent</strong>, a hierarchical multi-agent system with a domain-oriented toolset for automating end-to-end ESG workflows, and a three-level benchmark derived from 310 corporate sustainability reports, featuring expert-sourced questions with verified, unambiguous answers at Levels 1&ndash;2 and full report generation at Level 3. Evaluations across 20 state-of-the-art closed-source LLMs show that ESGAgent achieves <strong>84.15% accuracy</strong> on Levels 1&ndash;2, surpassing the strongest baseline by 3.26 points, and produces Level 3 reports with higher factual consistency and analytical depth than commercial deep research systems, validated by both multi-LLM judging and human expert evaluation, showing a robust alignment (Pearson <em>r</em> = 0.551).</p>
     </div>
   </section>
 
-  <section id="method" class="section section-alt">
+  <section id="architecture" class="section section-alt">
     <div class="container">
-      <h2>Method</h2>
-      <div class="grid">
-        <div class="card">
-          <h3>Component One</h3>
-          <p>Placeholder description.</p>
+      <h2>Agent Architecture</h2>
+      <p class="section-intro">ESGAgent runs a hierarchical <strong>plan &rarr; execute &rarr; feedback</strong> loop: a central planning agent decomposes user objectives into sub-tasks, dispatches them to decoupled specialized sub-agents, and revises the plan based on their feedback.</p>
+
+      <div class="flow">
+        <div class="flow-node flow-node-top">User Objectives</div>
+        <div class="flow-arrow">&darr;</div>
+
+        <div class="flow-node flow-node-planner">
+          <div class="flow-node-title">Planning Agent</div>
+          <div class="loop-pills">
+            <span class="pill">Decompose</span>
+            <span class="pill-arrow">&rarr;</span>
+            <span class="pill">Assign</span>
+            <span class="pill-arrow">&rarr;</span>
+            <span class="pill">Feedback</span>
+            <span class="pill-arrow">&rarr;</span>
+            <span class="pill">Update Plan</span>
+          </div>
         </div>
-        <div class="card">
-          <h3>Component Two</h3>
-          <p>Placeholder description.</p>
+        <div class="flow-arrow">&darr;</div>
+
+        <div class="flow-label">dispatched to specialized, isolated sub-agents</div>
+        <div class="agent-grid">
+          <div class="agent-card">
+            <h3>Retriever</h3>
+            <p>KG-augmented, multi-turn retrieval over local vector databases for contextual analysis and summarization.</p>
+          </div>
+          <div class="agent-card">
+            <h3>Deep Researcher</h3>
+            <p>Optimizes queries and searches the web in real time to supplement static local corpora with current information.</p>
+          </div>
+          <div class="agent-card">
+            <h3>Deep Analyzer</h3>
+            <p>Integrates multi-source information via multi-turn reasoning and summarization.</p>
+          </div>
+          <div class="agent-card">
+            <h3>Python Interpreter</h3>
+            <p>Generates and executes code for financial modeling, carbon calculation, and regulatory alignment.</p>
+          </div>
+          <div class="agent-card">
+            <h3>Plotter</h3>
+            <p>Aligns quantitative data and automates generation of high-quality visualization code.</p>
+          </div>
+          <div class="agent-card">
+            <h3>Report Tool</h3>
+            <p>Integrates analytical summaries and graphics into structured, traceable Markdown/PDF reports.</p>
+          </div>
         </div>
-        <div class="card">
-          <h3>Component Three</h3>
-          <p>Placeholder description.</p>
+
+        <div class="flow-arrow flow-arrow-up">&uarr; feedback &amp; objective shifts flow back to the planner</div>
+      </div>
+
+      <p class="section-note">A dual-layered memory keeps a centralized <strong>global memory</strong> at the orchestrator level, strictly decoupled from each sub-agent&rsquo;s local context &mdash; preventing context noise while preserving cross-source entity consistency.</p>
+    </div>
+  </section>
+
+  <section id="benchmark" class="section">
+    <div class="container">
+      <h2>ESG Benchmark</h2>
+      <p class="section-intro">A three-level hierarchy built from 310 DJIA sustainability reports (2010&ndash;2024), progressing from atomic factual recall to full analytical report generation.</p>
+
+      <div class="grid level-grid">
+        <div class="card level-card">
+          <span class="level-tag level-tag-1">Level 1 &middot; Easy</span>
+          <h3>Atomic Tasks</h3>
+          <p>132 questions sourced from CFA Institute Certificate in ESG Investing materials, requiring 1&ndash;2 steps to identify core professional concepts.</p>
+        </div>
+        <div class="card level-card">
+          <span class="level-tag level-tag-2">Level 2 &middot; Medium</span>
+          <h3>Compositional Tasks</h3>
+          <p>114 questions requiring 3&ndash;5 reasoning steps across multiple tools, including multimodal attachments (PDF, CSV, MP3, MP4).</p>
+        </div>
+        <div class="card level-card">
+          <span class="level-tag level-tag-3">Level 3 &middot; Advanced</span>
+          <h3>Report Generation</h3>
+          <p>45 open-ended tasks requiring rigorous, professional-grade ESG report synthesis with visualizations, per GRI/SASB standards.</p>
         </div>
       </div>
+    </div>
+  </section>
+
+  <section id="leaderboard" class="section section-alt">
+    <div class="container">
+      <h2>Leaderboard</h2>
+      <p class="section-intro">Aggregate accuracy across Levels 1&ndash;2 (246 tasks). ESGAgent surpasses the strongest general-purpose baseline, Gemini-3-flash, by 3.26 points.</p>
+
+      <div class="table-wrap">
+        <table class="leaderboard-table">
+          <thead>
+            <tr><th class="col-rank">#</th><th>Model / Agent</th><th class="col-score">Accuracy</th></tr>
+          </thead>
+          <tbody>
+            <tr class="row-ours"><td class="col-rank">1</td><td>ESGAgent <span class="badge-ours">Ours</span></td><td class="col-score"><div class="bar-cell"><span class="bar-fill" style="width:84.15%"></span><span class="bar-value">84.15%</span></div></td></tr>
+            <tr><td class="col-rank">2</td><td>Gemini-3-flash</td><td class="col-score"><div class="bar-cell"><span class="bar-fill" style="width:80.89%"></span><span class="bar-value">80.89%</span></div></td></tr>
+            <tr><td class="col-rank">3</td><td>Gemini-3.1-pro</td><td class="col-score"><div class="bar-cell"><span class="bar-fill" style="width:79.27%"></span><span class="bar-value">79.27%</span></div></td></tr>
+            <tr><td class="col-rank">4</td><td>Gemini-3-pro</td><td class="col-score"><div class="bar-cell"><span class="bar-fill" style="width:78.05%"></span><span class="bar-value">78.05%</span></div></td></tr>
+            <tr><td class="col-rank">5</td><td>GPT-5</td><td class="col-score"><div class="bar-cell"><span class="bar-fill" style="width:77.24%"></span><span class="bar-value">77.24%</span></div></td></tr>
+            <tr><td class="col-rank">5</td><td>Gemini-3.1-flash lite</td><td class="col-score"><div class="bar-cell"><span class="bar-fill" style="width:77.24%"></span><span class="bar-value">77.24%</span></div></td></tr>
+            <tr><td class="col-rank">5</td><td>Deepseek-r1</td><td class="col-score"><div class="bar-cell"><span class="bar-fill" style="width:77.24%"></span><span class="bar-value">77.24%</span></div></td></tr>
+            <tr><td class="col-rank">8</td><td>GPT-o3</td><td class="col-score"><div class="bar-cell"><span class="bar-fill" style="width:76.83%"></span><span class="bar-value">76.83%</span></div></td></tr>
+            <tr><td class="col-rank">8</td><td>Claude-opus-4.6</td><td class="col-score"><div class="bar-cell"><span class="bar-fill" style="width:76.83%"></span><span class="bar-value">76.83%</span></div></td></tr>
+            <tr><td class="col-rank">10</td><td>GPT-5.4</td><td class="col-score"><div class="bar-cell"><span class="bar-fill" style="width:76.42%"></span><span class="bar-value">76.42%</span></div></td></tr>
+            <tr><td class="col-rank">10</td><td>Gemini-2.5-pro</td><td class="col-score"><div class="bar-cell"><span class="bar-fill" style="width:76.42%"></span><span class="bar-value">76.42%</span></div></td></tr>
+            <tr><td class="col-rank">12</td><td>Claude-opus-4.5</td><td class="col-score"><div class="bar-cell"><span class="bar-fill" style="width:76.02%"></span><span class="bar-value">76.02%</span></div></td></tr>
+            <tr><td class="col-rank">13</td><td>GPT-4.1</td><td class="col-score"><div class="bar-cell"><span class="bar-fill" style="width:74.39%"></span><span class="bar-value">74.39%</span></div></td></tr>
+            <tr><td class="col-rank">14</td><td>GPT-4o</td><td class="col-score"><div class="bar-cell"><span class="bar-fill" style="width:73.17%"></span><span class="bar-value">73.17%</span></div></td></tr>
+            <tr><td class="col-rank">15</td><td>GPT-5.2</td><td class="col-score"><div class="bar-cell"><span class="bar-fill" style="width:72.76%"></span><span class="bar-value">72.76%</span></div></td></tr>
+            <tr><td class="col-rank">15</td><td>Deepseek-v3</td><td class="col-score"><div class="bar-cell"><span class="bar-fill" style="width:72.76%"></span><span class="bar-value">72.76%</span></div></td></tr>
+            <tr><td class="col-rank">15</td><td>Claude-sonnet-4.6</td><td class="col-score"><div class="bar-cell"><span class="bar-fill" style="width:72.76%"></span><span class="bar-value">72.76%</span></div></td></tr>
+            <tr><td class="col-rank">18</td><td>Gemini-2.5-flash</td><td class="col-score"><div class="bar-cell"><span class="bar-fill" style="width:72.36%"></span><span class="bar-value">72.36%</span></div></td></tr>
+            <tr><td class="col-rank">19</td><td>GPT-5.1</td><td class="col-score"><div class="bar-cell"><span class="bar-fill" style="width:70.33%"></span><span class="bar-value">70.33%</span></div></td></tr>
+            <tr><td class="col-rank">20</td><td>Claude-sonnet-4.5</td><td class="col-score"><div class="bar-cell"><span class="bar-fill" style="width:69.92%"></span><span class="bar-value">69.92%</span></div></td></tr>
+            <tr><td class="col-rank">21</td><td>Claude-haiku-4.5</td><td class="col-score"><div class="bar-cell"><span class="bar-fill" style="width:69.11%"></span><span class="bar-value">69.11%</span></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="table-footnote">Source: Table 3 in the paper. Full per-capability and per-modality breakdowns are reported in Appendix C.</p>
     </div>
   </section>
 
