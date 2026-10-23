@@ -78,12 +78,21 @@
   <section id="architecture" class="section section-alt">
     <div class="container">
       <h2>Agent Architecture</h2>
-      <p class="section-intro">ESGAgent runs a hierarchical <strong>plan &rarr; execute &rarr; feedback</strong> loop: a central planning agent decomposes user objectives into sub-tasks, dispatches them to decoupled specialized sub-agents, and revises the plan based on their feedback.</p>
+      <div class="arch-row arch-row-workflow">
+        <div class="arch-text">
+          <p>ESGAgent runs a hierarchical <strong>plan &rarr; execute &rarr; feedback</strong> loop: a central planning agent decomposes user objectives into sub-tasks, dispatches them to decoupled specialized sub-agents, and revises the plan based on their feedback.</p>
+        </div>
 
-      <div class="arch-row">
         <figure class="figure arch-figure">
           <img src="assets/workflow.png" alt="ESGAgent end-to-end workflow: a query is answered using information sources, analytical engines, and output deliverables" loading="lazy">
           <figcaption>End-to-end workflow of ESGAgent, from an ESG query to a professional report.</figcaption>
+        </figure>
+      </div>
+
+      <div class="arch-row">
+        <figure class="figure arch-figure">
+          <img src="assets/loop.png" alt="Planning agent interprets, decomposes and assigns tasks to specialized sub-agents, then updates the plan from their feedback" loading="lazy">
+          <figcaption>The planning agent and its specialized sub-agents.</figcaption>
         </figure>
 
         <div class="arch-text">
@@ -98,11 +107,6 @@
           </ul>
         </div>
       </div>
-
-      <figure class="figure loop-figure">
-        <img src="assets/loop.png" alt="Planning agent interprets, decomposes and assigns tasks to specialized sub-agents, then updates the plan from their feedback" loading="lazy">
-        <figcaption>The planning agent and its specialized sub-agents.</figcaption>
-      </figure>
     </div>
   </section>
 
@@ -167,13 +171,6 @@
         </table>
       </div>
       <p class="table-footnote">Source: Table 3 in the paper. Full per-capability and per-modality breakdowns are reported in Appendix C.</p>
-    </div>
-  </section>
-
-  <section id="demo" class="section">
-    <div class="container">
-      <h2>Demo</h2>
-      <p>Placeholder for screenshots, video, or an interactive demo.</p>
     </div>
   </section>
 
