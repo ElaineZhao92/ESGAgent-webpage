@@ -78,7 +78,7 @@
   <section id="abstract" class="section">
     <div class="container">
       <h2>Abstract</h2>
-      <p>Environmental, social, and governance (ESG) criteria are essential for evaluating corporate sustainability, yet professional ESG analysis is hindered by data fragmentation and complex multi-step workflows. Existing ESG benchmarks rely on LLM-generated questions that often suffer from semantic ambiguity, limiting their diagnostic reliability. We introduce <strong>ESGAgent</strong>, a hierarchical multi-agent system with a domain-oriented toolset for automating end-to-end ESG workflows, and a three-level benchmark derived from 310 corporate sustainability reports, featuring expert-sourced questions with verified, unambiguous answers at Levels 1&ndash;2 and full report generation at Level 3. Evaluations across 20 state-of-the-art closed-source LLMs show that ESGAgent achieves <strong>84.15% accuracy</strong> on Levels 1&ndash;2, surpassing the strongest baseline by 3.26 points, and produces Level 3 reports with higher factual consistency and analytical depth than commercial deep research systems, validated by both multi-LLM judging and human expert evaluation, showing a robust alignment (Pearson <em>r</em> = 0.551).</p>
+      <p>Environmental, social, and governance (ESG) criteria are essential for evaluating corporate sustainability, yet professional ESG analysis is hindered by data fragmentation and complex multi-step workflows. Existing ESG benchmarks rely on LLM-generated questions that often suffer from semantic ambiguity, limiting their diagnostic reliability. We introduce <strong>ESGAgent</strong>, a hierarchical multi-agent system with a domain-oriented toolset for automating end-to-end ESG workflows, and a three-level benchmark derived from 310 corporate sustainability reports, featuring expert-sourced questions with verified, unambiguous answers at Levels 1-2 and full report generation at Level 3. Evaluations across 20 state-of-the-art closed-source LLMs show that ESGAgent achieves 84.15% accuracy on Levels 1-2, surpassing the strongest baseline by 3.26 points, and produces Level 3 reports with higher factual consistency and analytical depth than commercial deep research systems, validated by both multi-LLM judging and human expert evaluation, showing a robust alignment (Pearson <em>r</em> = 0.551).</p>
     </div>
   </section>
 
@@ -87,56 +87,29 @@
       <h2>Agent Architecture</h2>
       <p class="section-intro">ESGAgent runs a hierarchical <strong>plan &rarr; execute &rarr; feedback</strong> loop: a central planning agent decomposes user objectives into sub-tasks, dispatches them to decoupled specialized sub-agents, and revises the plan based on their feedback.</p>
 
-      <div class="flow">
-        <div class="flow-node flow-node-top">User Objectives</div>
-        <div class="flow-arrow">&darr;</div>
+      <figure class="figure">
+        <img src="assets/workflow.png" alt="ESGAgent end-to-end workflow: a query is answered using information sources, analytical engines, and output deliverables" loading="lazy">
+        <figcaption>End-to-end workflow of ESGAgent, from an ESG query to a professional report.</figcaption>
+      </figure>
 
-        <div class="flow-node flow-node-planner">
-          <div class="flow-node-title">Planning Agent</div>
-          <div class="loop-pills">
-            <span class="pill">Decompose</span>
-            <span class="pill-arrow">&rarr;</span>
-            <span class="pill">Assign</span>
-            <span class="pill-arrow">&rarr;</span>
-            <span class="pill">Feedback</span>
-            <span class="pill-arrow">&rarr;</span>
-            <span class="pill">Update Plan</span>
-          </div>
+      <div class="arch-row">
+        <figure class="figure arch-figure">
+          <img src="assets/loop.png" alt="Planning agent interprets, decomposes and assigns tasks to specialized sub-agents, then updates the plan from their feedback" loading="lazy">
+          <figcaption>The planning agent and its specialized sub-agents.</figcaption>
+        </figure>
+
+        <div class="arch-text">
+          <h3>Execution Loop</h3>
+          <p>ESGAgent adopts a hierarchical &ldquo;plan&ndash;execute&ndash;feedback&rdquo; cycle. A central planner decomposes user goals into sub-tasks and assigns them to specialized sub-agents with isolated instructions and data, ensuring modular execution. After each step, the planner evaluates feedback and dynamically updates the plan when results are incomplete or errors occur.</p>
+
+          <h3>Memory and Context Management</h3>
+          <p>ESGAgent adopts a dual-layer memory design with global memory and local memory.</p>
+          <ul>
+            <li><strong>Global memory</strong> (at the planner level) maintains high-level insights and ensures consistency across tasks.</li>
+            <li><strong>Local memory</strong> (at the sub-agent level) is task-specific, allowing each agent to focus on relevant data without global context interference.</li>
+          </ul>
         </div>
-        <div class="flow-arrow">&darr;</div>
-
-        <div class="flow-label">dispatched to specialized, isolated sub-agents</div>
-        <div class="agent-grid">
-          <div class="agent-card">
-            <h3>Retriever</h3>
-            <p>KG-augmented, multi-turn retrieval over local vector databases for contextual analysis and summarization.</p>
-          </div>
-          <div class="agent-card">
-            <h3>Deep Researcher</h3>
-            <p>Optimizes queries and searches the web in real time to supplement static local corpora with current information.</p>
-          </div>
-          <div class="agent-card">
-            <h3>Deep Analyzer</h3>
-            <p>Integrates multi-source information via multi-turn reasoning and summarization.</p>
-          </div>
-          <div class="agent-card">
-            <h3>Python Interpreter</h3>
-            <p>Generates and executes code for financial modeling, carbon calculation, and regulatory alignment.</p>
-          </div>
-          <div class="agent-card">
-            <h3>Plotter</h3>
-            <p>Aligns quantitative data and automates generation of high-quality visualization code.</p>
-          </div>
-          <div class="agent-card">
-            <h3>Report Tool</h3>
-            <p>Integrates analytical summaries and graphics into structured, traceable Markdown/PDF reports.</p>
-          </div>
-        </div>
-
-        <div class="flow-arrow flow-arrow-up">&uarr; feedback &amp; objective shifts flow back to the planner</div>
       </div>
-
-      <p class="section-note">A dual-layered memory keeps a centralized <strong>global memory</strong> at the orchestrator level, strictly decoupled from each sub-agent&rsquo;s local context &mdash; preventing context noise while preserving cross-source entity consistency.</p>
     </div>
   </section>
 

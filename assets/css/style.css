@@ -284,117 +284,69 @@ h1, h2, h3 {
   margin-top: 0;
 }
 
-/* Architecture flow diagram */
+/* Architecture figures */
 
-.flow {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-
-.flow-node {
+.figure {
+  margin: 0;
   background: var(--color-bg);
   border: 1px solid var(--color-border);
   border-radius: var(--radius);
-  padding: 14px 28px;
-  font-weight: 600;
+  padding: 16px;
 }
 
-.flow-node-top {
+.figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+}
+
+.figure figcaption {
   color: var(--color-muted);
-  font-size: 0.9rem;
-  border-style: dashed;
-}
-
-.flow-arrow {
-  font-size: 1.5rem;
-  color: var(--green);
-  line-height: 1;
-  margin: 6px 0;
-}
-
-.flow-arrow-up {
   font-size: 0.85rem;
-  font-weight: 500;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.arch-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 40px;
+  align-items: center;
+  margin-top: 40px;
+}
+
+.arch-text h3 {
+  font-size: 1.2rem;
+  margin: 0 0 8px;
+  color: var(--green-dark);
+}
+
+.arch-text h3 + p {
+  margin-top: 0;
+}
+
+.arch-text p,
+.arch-text li {
   color: var(--color-muted);
+  font-size: 0.98rem;
+}
+
+.arch-text p + h3 {
   margin-top: 28px;
 }
 
-.flow-node-planner {
-  padding: 20px 28px;
-  border: 1.5px solid transparent;
-  background: linear-gradient(var(--color-bg), var(--color-bg)) padding-box,
-              var(--gradient) border-box;
-  box-shadow: 0 6px 20px rgba(5, 150, 105, 0.12);
+.arch-text ul {
+  margin: 8px 0 0;
+  padding-left: 20px;
 }
 
-.flow-node-title {
-  font-family: var(--font-display);
-  font-size: 1.15rem;
-  margin-bottom: 12px;
+.arch-text li + li {
+  margin-top: 6px;
 }
 
-.loop-pills {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.pill {
-  background: var(--color-bg-alt);
-  border: 1px solid var(--color-border);
-  border-radius: 999px;
-  padding: 5px 14px;
-  font-size: 0.82rem;
-  font-weight: 500;
+.arch-text li strong {
   color: var(--color-text);
-}
-
-.pill-arrow {
-  color: var(--color-muted);
-  font-size: 0.85rem;
-}
-
-.flow-label {
-  color: var(--color-muted);
-  font-size: 0.85rem;
-  margin: 4px 0 20px;
-}
-
-.agent-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 16px;
-  width: 100%;
-}
-
-.agent-card {
-  background: var(--color-bg);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius);
-  padding: 18px;
-  text-align: left;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
-
-.agent-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(16, 32, 28, 0.08);
-}
-
-.agent-card h3 {
-  font-size: 1rem;
-  margin: 0 0 8px;
-  color: var(--blue-dark);
-}
-
-.agent-card p {
-  font-size: 0.88rem;
-  color: var(--color-muted);
-  margin: 0;
 }
 
 /* Benchmark level cards */
@@ -560,6 +512,15 @@ h1, h2, h3 {
 
   .stats {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .arch-row {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .figure {
+    padding: 8px;
   }
 
   .nav a {
